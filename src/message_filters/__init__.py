@@ -32,8 +32,15 @@ Message Filter Objects
 
 import itertools
 import threading
-import rospy
+import rclpy
+import time
+from functools import reduce
+from builtin_interfaces.msg import Time
+from builtin_interfaces.msg import Duration
+from rclpy.constants import S_TO_NS
 
+def stamp_time(stamp):
+    return float(str(stamp.sec) + "." + str(stamp.nanosec))
 
 class SimpleFilter(object):
 
@@ -67,9 +74,10 @@ class Subscriber(SimpleFilter):
     """
     def __init__(self, *args, **kwargs):
         SimpleFilter.__init__(self)
-        self.topic = args[0]
+        self.node = args[0]
+        self.topic = args[2]
         kwargs['callback'] = self.callback
-        self.sub = rospy.Subscriber(*args, **kwargs)
+        self.sub = self.node.create_subscription(*args[1:], **kwargs)
 
     def callback(self, msg):
         self.signalMessage(msg)
@@ -113,13 +121,13 @@ class Cache(SimpleFilter):
     def add(self, msg):
         if not hasattr(msg, 'header') or not hasattr(msg.header, 'stamp'):
             if not self.allow_headerless:
-                rospy.logwarn("Cannot use message filters with non-stamped messages. "
+                rclpy.logging._root_logger.log("Cannot use message filters with non-stamped messages. "
                               "Use the 'allow_headerless' constructor option to "
                               "auto-assign ROS time to headerless messages.")
                 return
-            stamp = rospy.Time.now()
+            stamp = time.monotonic()
         else:
-            stamp = msg.header.stamp
+            stamp = stamp_time(msg.header.stamp)
 
         # Insert sorted
         self.cache_times.append(stamp)
@@ -211,7 +219,7 @@ class TimeSynchronizer(SimpleFilter):
         self.lock.acquire()
         my_queue[msg.header.stamp] = msg
         while len(my_queue) > self.queue_size:
-            del my_queue[min(my_queue)]
+            del my_queue[min(my_queue.keys())]
         # common is the set of timestamps that occur in all queues
         common = reduce(set.intersection, [set(q) for q in self.queues])
         for t in sorted(common):
@@ -237,19 +245,19 @@ class ApproximateTimeSynchronizer(TimeSynchronizer):
 
     def __init__(self, fs, queue_size, slop, allow_headerless=False):
         TimeSynchronizer.__init__(self, fs, queue_size)
-        self.slop = rospy.Duration.from_sec(slop)
+        self.slop = slop
         self.allow_headerless = allow_headerless
 
     def add(self, msg, my_queue, my_queue_index=None):
         if not hasattr(msg, 'header') or not hasattr(msg.header, 'stamp'):
             if not self.allow_headerless:
-                rospy.logwarn("Cannot use message filters with non-stamped messages. "
+                rclpy.logging._root_logger.log("Cannot use message filters with non-stamped messages. "
                               "Use the 'allow_headerless' constructor option to "
                               "auto-assign ROS time to headerless messages.")
                 return
-            stamp = rospy.Time.now()
+            stamp = time.monotonic()
         else:
-            stamp = msg.header.stamp
+            stamp = stamp_time(msg.header.stamp)
 
         self.lock.acquire()
         my_queue[stamp] = msg
@@ -275,7 +283,7 @@ class ApproximateTimeSynchronizer(TimeSynchronizer):
                 return
             topic_stamps = sorted(topic_stamps, key=lambda x: x[1])
             stamps.append(topic_stamps)
-        for vv in itertools.product(*[zip(*s)[0] for s in stamps]):
+        for vv in itertools.product(*[list(zip(*s))[0] for s in stamps]):
             vv = list(vv)
             # insert the new message
             if my_queue_index is not None:
