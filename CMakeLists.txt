@@ -102,10 +102,10 @@ if(BUILD_TESTING)
     target_link_libraries(${PROJECT_NAME}-test_approximate_time_policy ${PROJECT_NAME})
   endif()
 
-#  ament_add_gtest(${PROJECT_NAME}-test_fuzz test/test_fuzz.cpp)
-#  if(TARGET ${PROJECT_NAME}-test_fuzz)
-#    target_link_libraries(${PROJECT_NAME}-test_fuzz ${PROJECT_NAME})
-#  endif()
+  ament_add_gtest(${PROJECT_NAME}-test_fuzz test/test_fuzz.cpp SKIP_TEST)
+  if(TARGET ${PROJECT_NAME}-test_fuzz)
+    target_link_libraries(${PROJECT_NAME}-test_fuzz ${PROJECT_NAME})
+  endif()
 
   find_package(ament_cmake_pytest REQUIRED)
   ament_add_pytest_test(msfpytests test

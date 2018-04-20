@@ -116,7 +116,7 @@ class TestApproxSync(unittest.TestCase):
             self.assertEqual(self.collector, [])
             for i in random.sample(range(N), N):
                 msg = seq1[i]
-#               rospy.rostime._set_rostime(rospy.Time(i+0.05))
+               rospy.rostime._set_rostime(rospy.Time(i+0.05))
                 time.sleep(0.05)
                 m1.signalMessage(msg)
             self.assertEqual(set(self.collector), set(zip(seq0, seq1)))

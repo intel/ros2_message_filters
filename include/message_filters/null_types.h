@@ -37,8 +37,6 @@
 
 #include "connection.h"
 
-//#include <ros/time.h>
-//#include <ros/message_traits.h>
 #include "message_filters/message_traits.h"
 #include <rclcpp/rclcpp.hpp>
 #include <memory>

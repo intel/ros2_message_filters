@@ -180,4 +180,7 @@ $./build/message_filters/message_filters-test_fuzz
 [==========] 3 tests from 3 test cases ran. (15142 ms total)
 [  PASSED  ] 3 tests.
 ```
-Any security issue should be reported using process at https://01.org/security."
+Any security issue should be reported using process at https://01.org/security.
+
+- Known issue
+* python not support headless message

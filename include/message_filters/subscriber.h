@@ -108,7 +108,6 @@ public:
    * \param transport_hints The transport hints to pass along
    * \param callback_queue The callback queue to pass along
    */
-//  Subscriber(ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, const ros::TransportHints& transport_hints = ros::TransportHints(), ros::CallbackQueueInterface* callback_queue = 0)
   Subscriber(rclcpp::Node* nh, const std::string& topic, const rmw_qos_profile_t qos = rmw_qos_profile_default)
   {
     subscribe(nh, topic, qos);
@@ -137,7 +136,6 @@ public:
    * \param transport_hints The transport hints to pass along
    * \param callback_queue The callback queue to pass along
    */
-//  void subscribe(ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, const ros::TransportHints& transport_hints = ros::TransportHints(), ros::CallbackQueueInterface* callback_queue = 0)
   void subscribe(rclcpp::Node* nh, const std::string& topic, const rmw_qos_profile_t qos = rmw_qos_profile_default)
   {
     unsubscribe();
@@ -183,7 +181,6 @@ public:
   /**
    * \brief Returns the internal ros::Subscriber object
    */
-//  const ros::Subscriber& getSubscriber() const { return sub_; }
   const typename rclcpp::Subscription<M>::SharedPtr getSubscriber() const { return sub_; }
 
   /**
