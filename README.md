@@ -38,11 +38,11 @@
     return 0;
    }
 ```
-**Environment
-```
-Hardware: Compliant to ROS2 HW requirements
-Software: ROS2 + Supported OS(Linux, Win, Mac)
-```
+
+**Environment**
+
+* `Hardware`: Compliant to ROS2 HW requirements
+* `Software`: ROS2 + Supported OS(Linux, Win, Mac)
 
 **How to build and test ROS2 message filters**
 - Clone and build ROS2 source code under ros2_ws, refer to https://github.com/ros2/ros2/wiki/Linux-Development-Setup
@@ -56,7 +56,7 @@ $cd src/ros2
 $git clone https://github.intel.com/otc-rse/ros2_message_filters.git
 $ament build src/ros2/ros2_message_filters
 ```
-- Run unit test
+- Run unit tests
 ```
 $ament test src/ros2/ros2_message_filters
 
@@ -155,7 +155,7 @@ Total Test time (real) =  16.69 sec
 
 ```
 
-- Security check
+- Run fuzz tests (`disabled by default`)
 ```
 $./build/message_filters/message_filters-test_fuzz
 
@@ -180,7 +180,9 @@ $./build/message_filters/message_filters-test_fuzz
 [==========] 3 tests from 3 test cases ran. (15142 ms total)
 [  PASSED  ] 3 tests.
 ```
-Any security issue should be reported using process at https://01.org/security.
 
-- Known issue
+## Known issue
 * python not support headless message
+
+## Security check
+Any security issue should be reported using process at https://01.org/security.
