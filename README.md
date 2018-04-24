@@ -1,17 +1,22 @@
 # ROS2 Message Filters 
 
-`ros2_message_filters` message_filters is a utility library for use with rclcpp and rclpy. It collects commonly used message "filtering" algorithms into a common space. A message filter is defined as something which a message arrives into and may or may not be spit back out of at a later point in time. 
+`ros2_message_filters` blends various messages based on the conditions that filter needs to met and derives from ROS2 porting of [ROS message_filters](http://wiki.ros.org/message_filters). It collects commonly used message "filtering" algorithms into a common space. A message filter is defined as something which a message arrives into and may or may not be spit back out of at a later point in time. 
 
 
 **The API is a combination of parts:**
 - Filter Pattern
-  - registerCallback(cb)
-  - connectInput(filter)
+  - `registerCallback(cb)`
+  - `connectInput(filter)`
 - Subscriber
-  - subscribe(nodep, topic, 1, myCallback)
+  - `subscribe(nodep, topic, 1, myCallback)`
 - Time Synchronizer
-  - Input : C++: Up to 9 separate filters, each of which is of the form void callback(const std::shared_ptr<M const>&). The number of filters supported is determined by the number of template arguments the class was created with. Python: N separate filters, each of which has signature callback(msg). 
-  - Output : C++: For message types M0..M8, void callback(const std::shared_ptr<M0 const>&, ..., const std::shared_ptr<M8 const>&). The number of parameters is determined by the number of template arguments the class was created with. Python: callback(msg0.. msgN). The number of parameters is determined by the number of template arguments the class was created with.
+  - Input : 
+    - C++: Up to 9 separate filters, each of which is of the form `void callback(const std::shared_ptr<M const>&)`. The number of filters supported is determined by the number of template arguments the class was created with. 
+    - Python: N separate filters, each of which has signature `callback(msg)`. 
+  - Output : 
+    - C++: For message types M0..M8, `void callback(const std::shared_ptr<M0 const>&`, ..., `const std::shared_ptr<M8 const>&)`. The number of parameters is determined by the number of template arguments the class was created with.
+    - Python: `callback(msg0.. msgN)`. The number of parameters is determined by the number of template arguments the class was created with.
+
 ```
   #include <message_filters/subscriber.h>
   #include <message_filters/time_synchronizer.h>
@@ -41,19 +46,20 @@
 
 **Environment**
 
-* `Hardware`: Compliant to ROS2 HW requirements
-* `Software`: ROS2 + Supported OS(Linux, Win, Mac)
+* Hardware: Compliant to ROS2 HW requirements
+* Software: ROS2 + Supported OS(Linux, Win, Mac)
 
 **How to build and test ROS2 message filters**
-- Clone and build ROS2 source code under ros2_ws, refer to https://github.com/ros2/ros2/wiki/Linux-Development-Setup
+- Clone and build ROS2 source code under ros2 workspace, please refer to [ROS2 Installation](http://github.com/ros2/ros2/wiki/Installation) for more details and the following is the example in Ubuntu 16.04 LTS.
 ```
-$cd ~/ros2_ws/
+$cd ~/<ros2_workspace>
 $src/ament/ament_tools/scripts/ament.py build --build-tests --symlink-install
 ```
 - Build message filters
 ```
 $cd src/ros2
-$git clone https://github.intel.com/otc-rse/ros2_message_filters.git
+$git clone https://github.com/intel/ros2_message_filters.git
+$source <ros2_workspace>/install/local_setup.bash
 $ament build src/ros2/ros2_message_filters
 ```
 - Run unit tests
@@ -185,4 +191,4 @@ $./build/message_filters/message_filters-test_fuzz
 * python not support headless message
 
 ## Security check
-Any security issue should be reported using process at https://01.org/security.
+If there is any security issue, it should be reported using process at https://01.org/security.
