@@ -54,8 +54,6 @@ struct NullType
   static MsgHeader header;
 };
 
-MsgHeader NullType::header = {rclcpp::Time()};
-
 typedef std::shared_ptr<NullType const> NullTypeConstPtr;
 template<class M>
 struct NullFilter
