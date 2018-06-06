@@ -2,6 +2,18 @@
 Changelog for package message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.0.0 (2018-06-06)
+------------------
+* Change build tool from catkin to ament in CMakeLists.txt
+* ROS APIs move to ROS2 APIs
+* Drop boost dependency, using C++14 instead
+* Add message_event.h message_trait.h parameter_adapter.h which are missing in ROS2 core
+* Update existing test cases and add a fuzz test(default disable)
+* Drop unused setup.py
+* Add a README
+* Bug fixes
+* Contributor: Jing Wang, Ethan Gao
+
 1.13.5 (2017-11-09)
 -------------------
 

@@ -189,6 +189,7 @@ $./build/message_filters/message_filters-test_fuzz
 
 ## Known issue
 * python not support headless message
+* Not verify with Windows and OS X environment and there may be some errors
 
 ## Security check
 If there is any security issue, it should be reported using process at https://01.org/security.
