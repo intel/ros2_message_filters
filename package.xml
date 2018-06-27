@@ -21,6 +21,10 @@
   <build_depend>rcutils</build_depend>
   <build_depend>rmw_implementation_cmake</build_depend>
   <build_depend>std_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>ament_lint_auto</build_depend>
+  <build_depend>ament_cmake_gtest</build_depend>
+  <build_depend>ament_cmake_pytest</build_depend>
 
   <exec_depend>rclcpp</exec_depend>
   <exec_depend>rcutils</exec_depend>
