@@ -97,7 +97,7 @@ if(BUILD_TESTING)
     target_link_libraries(${PROJECT_NAME}-test_exact_time_policy ${PROJECT_NAME})
   endif()
 
-  ament_add_gtest(${PROJECT_NAME}-test_approximate_time_policy test/test_approximate_time_policy.cpp)
+  #ament_add_gtest(${PROJECT_NAME}-test_approximate_time_policy test/test_approximate_time_policy.cpp)
   if(TARGET ${PROJECT_NAME}-test_approximate_time_policy)
     target_link_libraries(${PROJECT_NAME}-test_approximate_time_policy ${PROJECT_NAME})
   endif()
