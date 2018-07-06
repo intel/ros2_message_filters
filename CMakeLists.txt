@@ -18,8 +18,6 @@ find_package(rcutils)
 find_package(builtin_interfaces REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
-#find_package(Boost REQUIRED COMPONENTS signals thread)
-
 
 include_directories(include)
 add_library(${PROJECT_NAME} SHARED src/connection.cpp)
@@ -29,7 +27,6 @@ ament_target_dependencies(${PROJECT_NAME}
   "std_msgs"
   "builtin_interfaces"
   "sensor_msgs")
-#target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 
 install(
   TARGETS ${PROJECT_NAME}
