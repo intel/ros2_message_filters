@@ -18,30 +18,33 @@
     - Python: `callback(msg0.. msgN)`. The number of parameters is determined by the number of template arguments the class was created with.
 
 ```
-  #include <message_filters/subscriber.h>
-  #include <message_filters/time_synchronizer.h>
-  #include <sensor_msgs/Image.h>
-  #include <sensor_msgs/CameraInfo.h>
+    #include <message_filters/subscriber.h>
+    #include <message_filters/time_synchronizer.h>
+    #include <sensor_msgs/msg/image.hpp>
+    #include <sensor_msgs/msg/camera_info.hpp>
 
-  using namespace sensor_msgs;
-  using namespace message_filters;
-    
-  void callback(const ImageConstPtr& image, const CameraInfoConstPtr& cam_info)
-  {
-     // Solve all of perception here...
-  }
-  
-  int main(int argc, char** argv)
-  {
-    rclcpp::init(argc, argv);
-    auto nh = std::make_shared<rclcpp::Node>("test_node");
-    Subscriber<Image> image_sub(nh.get(), "image");
-    Subscriber<CameraInfo> info_sub(nh.get(), "camera");
-    TimeSynchronizer<Image, CameraInfo> sync(image_sub, info_sub, 10);
-    sync.registerCallback(std::bind(&callback, _1, _2));
-    rclcpp::spin(nh);
-    return 0;
-   }
+    using namespace sensor_msgs::msg;
+    using namespace message_filters;
+
+    using std::placeholders::_1;
+    using std::placeholders::_2;
+
+    void callback(const Image::ConstSharedPtr& image, const CameraInfo::ConstSharedPtr& cam_info)
+    {
+        // Solve all of perception here...
+    }
+
+    int main(int argc, char** argv)
+    {
+        rclcpp::init(argc, argv);
+        auto nh = std::make_shared<rclcpp::Node>("test_node");
+        Subscriber<Image> image_sub(nh.get(), "image");
+        Subscriber<CameraInfo> info_sub(nh.get(), "camera");
+        TimeSynchronizer<Image, CameraInfo> sync(image_sub, info_sub, 10);
+        sync.registerCallback(std::bind(&callback, _1, _2));
+        rclcpp::spin(nh);
+        return 0;
+    }
 ```
 
 **Environment**
